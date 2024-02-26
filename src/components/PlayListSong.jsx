@@ -3,30 +3,46 @@ import { useEffect } from 'react';
 import "./playListSong.css"
 import {AiOutlineHeart} from "react-icons/ai"
 import {BsThreeDotsVertical} from "react-icons/bs"
+
 export default function PlayListSong(props){
-    const duration=props.duration
-    const {active,setActive}=props
+
+    const {
+        idx,
+        prevIndex,
+        setPrevIndex,
+        active,
+        setActive,
+        currentIndex,
+        setCurrentIndex,
+        title,
+        author,
+        duration,
+        url,
+        img,
+    } = props
+
     function formatter(myNumber){
-        myNumber=Math.floor(myNumber%60)
+        myNumber = Math.floor(myNumber % 60)
         return ("0" + myNumber).slice(-2);
     }
 
     useEffect(()=>{
-        if(active.isPlaying===true) 
-            document.getElementById(`play-gif${props.currentIndex}`).style.visibility="visible";
-        else if (active.isPlaying===false )
-            document.getElementById(`play-gif${props.currentIndex}`).style.visibility="hidden";
-        if(props.prevIndex>=0 && props.currentIndex!=props.prevIndex ) // && active.isPlaying===false
+        if (active.isPlaying){
+            document.getElementById(`play-gif${currentIndex}`).style.visibility="visible";
+        } else if (active.isPlaying===false ){
+            document.getElementById(`play-gif${currentIndex}`).style.visibility="hidden";
+       }
+            if (prevIndex>=0 && currentIndex!=prevIndex ) // && active.isPlaying===false
         {
-            document.getElementById(`play-gif${props.prevIndex}`).style.visibility="hidden"
+            document.getElementById(`play-gif${prevIndex}`).style.visibility="hidden"
         }
-    },[active,props.currentIndex])
+    },[active,currentIndex])
 
     function playSong(){
 
-        props.setIndex(props.idx)
-        document.getElementById(`play-gif${props.currentIndex}`).style.visibility="visible";
-        props.setPrevIndex(props.currentIndex);
+        setCurrentIndex(idx)
+        document.getElementById(`play-gif${currentIndex}`).style.visibility="visible";
+        setPrevIndex(currentIndex);
         setActive(function(prev){
             return({
                 ...prev,
@@ -38,13 +54,13 @@ export default function PlayListSong(props){
     return(
         <div className="playListSong" onClick={playSong}>
             <div className="img-detail">
-                        <img src={props.img}/>
+                        <img src={img}/>
                         <div className="song-detail">
-                            <h3>{props.title}</h3>
-                            <p>{props.author}</p>
+                            <h3>{title}</h3>
+                            <p>{author}</p>
                         </div>
                     </div>
-                    <img src="./images/play7.gif" id={`play-gif${props.idx}`} className="play-gif" style={{width:'35px'}}/>
+                    <img src="./images/play7.gif" id={`play-gif${idx}`} className="play-gif" style={{width:'35px'}}/>
                     <AiOutlineHeart className="icon heart"/>
                     <p className='duration'>{Math.floor(duration/60)}:{formatter(duration)}</p>
                     <BsThreeDotsVertical className="more-option"/>
