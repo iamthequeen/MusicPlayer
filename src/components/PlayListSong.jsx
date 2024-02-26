@@ -26,18 +26,18 @@ export default function PlayListSong(props){
         return ("0" + myNumber).slice(-2);
     }
 
-    useEffect(()=>{
+    // useEffect(()=>{
     //     if (active.isPlaying){
     //         document.getElementById(`play-gif${currentIndex}`).style.visibility="visible";
     //     } else {
     //         document.getElementById(`play-gif${currentIndex}`).style.visibility="hidden";
     //    }
 
-            if (prevIndex >=0 && currentIndex!=prevIndex) // && active.isPlaying===false
-        {
-            document.getElementById(`play-gif${prevIndex}`).style.visibility="hidden"
-        }
-    },[active, currentIndex])
+        //     if (prevIndex >=0 && currentIndex!=prevIndex) // && active.isPlaying===false
+        // {
+        //     document.getElementById(`play-gif${prevIndex}`).style.visibility="hidden"
+        // }
+    // },[active, currentIndex])
 
     function playSong(){
 
@@ -61,9 +61,13 @@ export default function PlayListSong(props){
                             <p>{author}</p>
                         </div>
                     </div>
-                    <img src="./images/play7.gif" id={`play-gif${idx}`} className="play-gif" style={{
+                    <img src="./images/play7.gif" 
+                    // might remove id assigment
+                    id={`play-gif${idx}`} 
+                    className="play-gif" 
+                    style={{
                         width:'35px',
-                        visibility: active.isPlaying ? "visible" : "hidden",
+                        visibility: (active.isPlaying && currentIndex === idx) ? "visible" : "hidden",
                         }}/>
                     <AiOutlineHeart className="icon heart"/>
                     <p className='duration'>{Math.floor(duration/60)}:{formatter(duration)}</p>
