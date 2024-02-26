@@ -33,7 +33,7 @@ export default function PlayListSong(props){
     //         document.getElementById(`play-gif${currentIndex}`).style.visibility="hidden";
     //    }
 
-            if (prevIndex >=0 && currentIndex!=prevIndex && active.isPlaying===false) // && active.isPlaying===false
+            if (prevIndex >=0 && currentIndex!=prevIndex) // && active.isPlaying===false
         {
             document.getElementById(`play-gif${prevIndex}`).style.visibility="hidden"
         }
