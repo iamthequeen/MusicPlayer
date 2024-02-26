@@ -10,7 +10,7 @@ export default function Player(props)
 
     const [currentTime,setCurrentTime]=useState(0)
     const audioEl=useRef(null)
-    const duration=props.music[props.index].duration
+    const duration=props.songs[props.currentIndex].duration
     useEffect(()=>{
         console.log("time updated",audioEl.current.currentTime)
         function watchtime(){
@@ -52,10 +52,10 @@ export default function Player(props)
 
     function skipSong(forward = true)
     {
-        console.log("skipSong",props.index)
+        console.log("skipSong",props.currentIndex)
         setCurrentTime(0)
         audioEl.current.currentTime=0;
-        props.setPrevIndex(props.index)
+        props.setPrevIndex(props.currentIndex)
         setActive(function(prev){
             return({
                 ...prev,
@@ -64,17 +64,17 @@ export default function Player(props)
         })
         if(forward)
         {
-            props.setIndex((temp)=>{
-              return ((temp+1)%(props.music.length))
+            props.setCurrentIndex((temp)=>{
+              return ((temp+1)%(props.songs.length))
             })
         }
         else{
-            props.setIndex(()=>{
-                let temp=props.index
+            props.setCurrentIndex(()=>{
+                let temp=props.currentIndex
                 temp--
                 if(temp<0)
                 {
-                    temp=props.music.length-1
+                    temp=props.songs.length-1
                 }
                 return temp
             })   
@@ -103,10 +103,10 @@ export default function Player(props)
     }
 
     function shuffleHandler(){
-        const random=Math.floor(Math.random() * props.music.length)
-        document.getElementById(`play-gif${props.index}`).style.visibility="hidden";
+        const random=Math.floor(Math.random() * props.songs.length)
+        document.getElementById(`play-gif${props.currentIndex}`).style.visibility="hidden";
         document.getElementById(`play-gif${random}`).style.visibility="visible";
-        props.setIndex(random)
+        props.setCurrentIndex(random)
         console.log("shuffle clicked")
     }
 
@@ -119,27 +119,27 @@ export default function Player(props)
         <div className="card">
 
             <audio 
-            src={props.music[props.index].url} 
+            src={props.songs[props.currentIndex].url} 
             ref={audioEl} preload="auto" 
             onEnded={()=>{
-                document.getElementById(`play-gif${props.index}`).style.visibility="hidden";
+                document.getElementById(`play-gif${props.currentIndex}`).style.visibility="hidden";
                 skipSong(true)}}
             />
 
             <div className="cd">
                 <img 
                 id="cover-img" 
-                src={props.music[props.index].img}
+                src={props.songs[props.currentIndex].img}
                 />
                 <div className="circle"></div>
             </div>
 
             <h4 className="title">
-            {props.music[props.index].title}
+            {props.songs[props.currentIndex].title}
             </h4>
 
             <p className="author">
-            {props.music[props.index].author}
+            {props.songs[props.currentIndex].author}
             </p>
 
             <input 

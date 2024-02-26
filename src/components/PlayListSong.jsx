@@ -24,7 +24,7 @@ export default function PlayListSong(props){
 
     function playSong(){
 
-        props.setIndex(props.index)
+        props.setIndex(props.idx)
         document.getElementById(`play-gif${props.currentIndex}`).style.visibility="visible";
         props.setPrevIndex(props.currentIndex);
         setActive(function(prev){
@@ -44,7 +44,7 @@ export default function PlayListSong(props){
                             <p>{props.author}</p>
                         </div>
                     </div>
-                    <img src="./images/play7.gif" id={`play-gif${props.index}`} className="play-gif" style={{width:'35px'}}/>
+                    <img src="./images/play7.gif" id={`play-gif${props.idx}`} className="play-gif" style={{width:'35px'}}/>
                     <AiOutlineHeart className="icon heart"/>
                     <p className='duration'>{Math.floor(duration/60)}:{formatter(duration)}</p>
                     <BsThreeDotsVertical className="more-option"/>
