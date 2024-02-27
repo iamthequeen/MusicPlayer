@@ -1,26 +1,38 @@
-import React,{useState,useEffect,useRef} from 'react';
+import React,{ useState, useEffect, useRef } from 'react';
 import {BsPlayFill,BsPauseFill,BsShuffle,BsSkipEndFill,BsSkipStartFill} from "react-icons/bs";
 import {ImLoop} from "react-icons/im";
 import"./player.css"
-export default function Player(props)
-{
-    const {active,setActive}=props
 
-    console.log("player rendered",active.isPlaying)
+export default function Player(props){
+    
+    const {
+        prevIndex,
+        setPrevIndex,
+        active,
+        setActive,
+        currentIndex,
+        setCurrentIndex,
+        songs,
+    } = props
 
-    const [currentTime,setCurrentTime]=useState(0)
-    const audioEl=useRef(null)
-    const duration=props.songs[props.currentIndex].duration
+    // console.log("player rendered",active.isPlaying)
+
+    const [currentTime, setCurrentTime] = useState(0)
+    const audioEl = useRef(null)
+    const duration = songs[currentIndex].duration
+    
     useEffect(()=>{
-        console.log("time updated",audioEl.current.currentTime)
-        function watchtime(){
+        // Update Time
+        const updateTime = () => {
             setCurrentTime(audioEl.current.currentTime)
         }
-        audioEl.current.addEventListener("timeupdate",watchtime)
-        return function(){
-            audioEl.current.removeEventListener("timeupdate",watchtime)
+
+        audioEl.current.addEventListener("timeupdate", updateTime)
+        
+        return () => {
+            audioEl.current.removeEventListener("timeupdate", updateTime)
         }
-    },[currentTime])
+    }, [currentTime])
     
     function changeHandler(event){
         audioEl.current.currentTime=event.target.value*audioEl.current.duration/1000;
@@ -52,10 +64,10 @@ export default function Player(props)
 
     function skipSong(forward = true)
     {
-        console.log("skipSong",props.currentIndex)
+        console.log("skipSong",currentIndex)
         setCurrentTime(0)
         audioEl.current.currentTime=0;
-        props.setPrevIndex(props.currentIndex)
+        setPrevIndex(currentIndex)
         setActive(function(prev){
             return({
                 ...prev,
@@ -64,17 +76,17 @@ export default function Player(props)
         })
         if(forward)
         {
-            props.setCurrentIndex((temp)=>{
-              return ((temp+1)%(props.songs.length))
+            setCurrentIndex((temp)=>{
+              return ((temp+1)%(songs.length))
             })
         }
         else{
-            props.setCurrentIndex(()=>{
-                let temp=props.currentIndex
+            setCurrentIndex(()=>{
+                let temp=currentIndex
                 temp--
                 if(temp<0)
                 {
-                    temp=props.songs.length-1
+                    temp=songs.length-1
                 }
                 return temp
             })   
@@ -103,10 +115,10 @@ export default function Player(props)
     }
 
     function shuffleHandler(){
-        const random=Math.floor(Math.random() * props.songs.length)
-        document.getElementById(`play-gif${props.currentIndex}`).style.visibility="hidden";
+        const random=Math.floor(Math.random() * songs.length)
+        document.getElementById(`play-gif${currentIndex}`).style.visibility="hidden";
         document.getElementById(`play-gif${random}`).style.visibility="visible";
-        props.setCurrentIndex(random)
+        setCurrentIndex(random)
         console.log("shuffle clicked")
     }
 
@@ -119,27 +131,27 @@ export default function Player(props)
         <div className="card">
 
             <audio 
-            src={props.songs[props.currentIndex].url} 
+            src={songs[currentIndex].url} 
             ref={audioEl} preload="auto" 
             onEnded={()=>{
-                document.getElementById(`play-gif${props.currentIndex}`).style.visibility="hidden";
+                document.getElementById(`play-gif${currentIndex}`).style.visibility="hidden";
                 skipSong(true)}}
             />
 
             <div className="cd">
                 <img 
                 id="cover-img" 
-                src={props.songs[props.currentIndex].img}
+                src={songs[currentIndex].img}
                 />
                 <div className="circle"></div>
             </div>
 
             <h4 className="title">
-            {props.songs[props.currentIndex].title}
+            {songs[currentIndex].title}
             </h4>
 
             <p className="author">
-            {props.songs[props.currentIndex].author}
+            {songs[currentIndex].author}
             </p>
 
             <input 
