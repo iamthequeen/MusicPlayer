@@ -28,8 +28,8 @@ export default function PlayListSong(props){
     function playSong(){
 
         setCurrentIndex(idx)
-        document.getElementById(`play-gif${currentIndex}`).style.visibility="visible";
-        setPrevIndex(currentIndex);
+        // document.getElementById(`play-gif${currentIndex}`).style.visibility="visible";
+        // setPrevIndex(currentIndex);
         setActive(function(prev){
             return({
                 ...prev,
@@ -49,7 +49,7 @@ export default function PlayListSong(props){
                     </div>
                     <img src="./images/play7.gif" 
                     // might remove id assigment
-                    id={`play-gif${idx}`} 
+                    // id={`play-gif${idx}`} 
                     className="play-gif" 
                     style={{
                         width:'35px',
