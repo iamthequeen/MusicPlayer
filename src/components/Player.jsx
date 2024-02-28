@@ -138,8 +138,8 @@ export default function Player(props)
             {props.music[props.index].title}
             </h4>
 
-            <p className="author">
-            {props.music[props.index].author}
+            <p className="artist">
+            {props.music[props.index].artist}
             </p>
 
             <input 
