@@ -9,7 +9,11 @@ export default function PlayListSong(props){
         duration,
         active,
         setActive,
-        currentIndex
+        setIndex,
+        setPrevIndex,
+        currentIndex,
+        title,
+        artist,
     } = props
 
     function formatter(myNumber){
@@ -30,9 +34,9 @@ export default function PlayListSong(props){
 
     function playSong(){
 
-        props.setIndex(currentIndex)
+        setIndex(currentIndex)
         document.getElementById(`play-gif${currentIndex}`).style.visibility="visible";
-        props.setPrevIndex(currentIndex);
+        setPrevIndex(currentIndex);
         setActive(function(prev){
             return({
                 ...prev,
@@ -51,7 +55,7 @@ export default function PlayListSong(props){
                         </div>
                     </div>
                     <img src="./images/play7.gif" 
-                    // id={`play-gif${currentIndex}`} 
+                    id={`play-gif${currentIndex}`} 
                     className="play-gif" style={{width:'35px'}}/>
                     <AiOutlineHeart className="icon heart"/>
                     <p className='duration'>{Math.floor(duration/60)}:{formatter(duration)}</p>

@@ -2,8 +2,8 @@ import React,{useState,useEffect,useRef} from 'react';
 import {BsPlayFill,BsPauseFill,BsShuffle,BsSkipEndFill,BsSkipStartFill} from "react-icons/bs";
 import {ImLoop} from "react-icons/im";
 import"./player.css"
-export default function Player(props)
-{
+
+export default function Player(props) {
     const {active,setActive}=props
 
     console.log("player rendered",active.isPlaying)
