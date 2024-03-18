@@ -8,7 +8,8 @@ export default function PlayListSong(props){
     const {
         duration,
         active,
-        setActive
+        setActive,
+        currentIndex
     } = props
 
     function formatter(myNumber){
@@ -16,22 +17,22 @@ export default function PlayListSong(props){
         return ("0" + myNumber).slice(-2);
     }
 
-    useEffect(() => {
-        if(active.isPlaying===true) 
-            document.getElementById(`play-gif${props.currentIndex}`).style.visibility="visible";
-        else if (active.isPlaying===false )
-            document.getElementById(`play-gif${props.currentIndex}`).style.visibility="hidden";
-        if(props.prevIndex>=0 && props.currentIndex!=props.prevIndex ) // && active.isPlaying===false
-        {
-            document.getElementById(`play-gif${props.prevIndex}`).style.visibility="hidden"
-        }
-    },[active,props.currentIndex])
+    // useEffect(() => {
+    //     if(active.isPlaying===true) 
+    //         document.getElementById(`play-gif${currentIndex}`).style.visibility="visible";
+    //     else if (active.isPlaying===false )
+    //         document.getElementById(`play-gif${currentIndex}`).style.visibility="hidden";
+    //     if(props.prevIndex>=0 && currentIndex!=props.prevIndex ) // && active.isPlaying===false
+    //     {
+    //         document.getElementById(`play-gif${props.prevIndex}`).style.visibility="hidden"
+    //     }
+    // },[active,currentIndex])
 
     function playSong(){
 
         props.setIndex(currentIndex)
-        document.getElementById(`play-gif${props.currentIndex}`).style.visibility="visible";
-        props.setPrevIndex(props.currentIndex);
+        document.getElementById(`play-gif${currentIndex}`).style.visibility="visible";
+        props.setPrevIndex(currentIndex);
         setActive(function(prev){
             return({
                 ...prev,
@@ -49,7 +50,9 @@ export default function PlayListSong(props){
                             <p>{props.artist}</p>
                         </div>
                     </div>
-                    <img src="./images/play7.gif" id={`play-gif${currentIndex}`} className="play-gif" style={{width:'35px'}}/>
+                    <img src="./images/play7.gif" 
+                    // id={`play-gif${currentIndex}`} 
+                    className="play-gif" style={{width:'35px'}}/>
                     <AiOutlineHeart className="icon heart"/>
                     <p className='duration'>{Math.floor(duration/60)}:{formatter(duration)}</p>
                     <BsThreeDotsVertical className="more-option"/>
