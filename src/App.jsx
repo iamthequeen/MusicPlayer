@@ -9,7 +9,7 @@ export default function App()
 {
   const songs = MusicData
   const [currentIndex, setCurrentIndex] = useState(0);
-  // const [prevIndex, setPrevIndex] = useState(-1);
+  const [prevIndex, setPrevIndex] = useState(-1);
   const [active, setActive] = useState({
     isLoop: false,
     isPlaying: false,
