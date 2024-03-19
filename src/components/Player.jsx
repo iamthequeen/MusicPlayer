@@ -64,12 +64,12 @@ export default function Player(props) {
         })
         if(forward)
         {
-            props.setIndex((temp)=>{
+            props.setCurrentIndex((temp)=>{
               return ((temp+1)%(props.music.length))
             })
         }
         else{
-            props.setIndex(()=>{
+            props.setCurrentIndex(()=>{
                 let temp=props.index
                 temp--
                 if(temp<0)
@@ -106,7 +106,7 @@ export default function Player(props) {
         const random=Math.floor(Math.random() * props.music.length)
         document.getElementById(`play-gif${props.index}`).style.visibility="hidden";
         document.getElementById(`play-gif${random}`).style.visibility="visible";
-        props.setIndex(random)
+        props.setCurrentIndex(random)
         console.log("shuffle clicked")
     }
 

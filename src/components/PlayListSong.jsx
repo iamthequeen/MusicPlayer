@@ -9,11 +9,12 @@ export default function PlayListSong(props){
         duration,
         active,
         setActive,
-        setIndex,
+        setCurrentIndex,
         setPrevIndex,
         currentIndex,
         title,
         artist,
+        img,
     } = props
 
     function formatter(myNumber){
@@ -26,21 +27,21 @@ export default function PlayListSong(props){
     //         document.getElementById(`play-gif${currentIndex}`).style.visibility="visible";
     //     else if (active.isPlaying===false )
     //         document.getElementById(`play-gif${currentIndex}`).style.visibility="hidden";
-    //     if(props.prevIndex>=0 && currentIndex!=props.prevIndex ) // && active.isPlaying===false
+    //     if(prevIndex>=0 && currentIndex!=prevIndex ) // && active.isPlaying===false
     //     {
-    //         document.getElementById(`play-gif${props.prevIndex}`).style.visibility="hidden"
+    //         document.getElementById(`play-gif${prevIndex}`).style.visibility="hidden"
     //     }
     // },[active,currentIndex])
-
+ 
     function playSong(){
 
-        setIndex(currentIndex)
-        document.getElementById(`play-gif${currentIndex}`).style.visibility="visible";
-        setPrevIndex(currentIndex);
-        setActive(function(prev){
+        setCurrentIndex(idx)
+        // document.getElementById(`play-gif${currentIndex}`).style.visibility="visible";
+        // setPrevIndex(currentIndex);
+        setActive((prev) => {
             return({
                 ...prev,
-                isPlaying:true
+                isPlaying: true
             })
         })
     }
@@ -48,15 +49,19 @@ export default function PlayListSong(props){
     return(
         <div className="playListSong" onClick={playSong}>
             <div className="img-detail">
-                        <img src={props.img}/>
+                        <img src={img}/>
                         <div className="song-detail">
-                            <h3>{props.title}</h3>
-                            <p>{props.artist}</p>
+                            <h3>{title}</h3>
+                            <p>{artist}</p>
                         </div>
                     </div>
                     <img src="./images/play7.gif" 
-                    id={`play-gif${currentIndex}`} 
-                    className="play-gif" style={{width:'35px'}}/>
+                    // id={`play-gif${currentIndex}`} 
+                    className="play-gif" 
+                    style={{
+                        width:'35px',
+                        visibility: active.isPlaying && currentIndex === idx ? "visible" : "hidden",
+                        }}/>
                     <AiOutlineHeart className="icon heart"/>
                     <p className='duration'>{Math.floor(duration/60)}:{formatter(duration)}</p>
                     <BsThreeDotsVertical className="more-option"/>

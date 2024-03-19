@@ -23,7 +23,7 @@ export default function PlayList(props){
                     <PlayListSong
                         idx={idx}
                         currentIndex={currentIndex}
-                        setIndex={setCurrentIndex}
+                        setCurrentIndex={setCurrentIndex}
                         prevIndex={prevIndex}
                         setPrevIndex={setPrevIndex}
                         active={active}
