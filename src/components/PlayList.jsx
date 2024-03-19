@@ -21,6 +21,7 @@ export default function PlayList(props){
                 songs.map((song, idx)=>(
                 <li>
                     <PlayListSong
+                        key={song.title}
                         idx={idx}
                         currentIndex={currentIndex}
                         setCurrentIndex={setCurrentIndex}
