@@ -7,7 +7,7 @@ import VerticalNavbar from "./components/VerticalNavbar.jsx"
 
 export default function App()
 {
-  const [songs] = useState(MusicData)
+  const songs = MusicData
   const [currentIndex, setCurrentIndex] = useState(0);
   // const [prevIndex, setPrevIndex] = useState(-1);
   const [active, setActive] = useState({
@@ -30,7 +30,7 @@ return(
           songs={songs}
         />
         <Player
-          // prevIndex={prevIndex}
+          prevIndex={prevIndex}
           setPrevIndex={setPrevIndex}
           active={active}
           setActive={setActive}
